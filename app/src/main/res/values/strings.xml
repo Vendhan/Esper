@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Esper Mobiles</string>
+    <string name="mobile_list">Mobile Phones</string>
+    <string name="selection">Selection</string>
+    <string name="summary">Summary</string>
+    <string name="BASE_URL">empty</string>
+</resources>
