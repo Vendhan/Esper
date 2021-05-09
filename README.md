@@ -19,3 +19,8 @@ Esper is an app that fetches mobiles and its related details from api and shows 
 5. If there is no exclusions found, app will not make any difference, if there is any exclusions, app will unselect/disable those chips which are not valid
 6. Submit button will take user to summary screen after selections are made from each feature sections
 7. Summary screen will show mobile details along with the addiotnal features/valid combinations made by the user
+
+
+Screenshots:
+![image](https://user-images.githubusercontent.com/14262888/117574690-ec241680-b0fb-11eb-9b70-d7543d7460e1.png)
+![image](https://user-images.githubusercontent.com/14262888/117574709-ff36e680-b0fb-11eb-9a1c-2bb642d6e227.png)
