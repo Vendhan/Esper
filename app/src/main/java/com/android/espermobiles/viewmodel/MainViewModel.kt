@@ -26,6 +26,9 @@ class MainViewModel(
     val feature2Summary = ObservableField<FeaturesData>()
     val feature3Summary = ObservableField<List<FeaturesData>>()
 
+    val storageName = ObservableField<String>()
+    val mobileName = ObservableField<String>()
+
 //    init {
 //        fetchFeaturesDataFromDB()
 //    }

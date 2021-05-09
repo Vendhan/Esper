@@ -7,4 +7,5 @@
     <string name="no_network_connectivity">No Internet Connection!!</string>
     <string name="submit">Submit</string>
     <string name="warning_to_make_selection">Make atleast one selection in each section</string>
+    <string name="storage_variants">Storage variants</string>
 </resources>
