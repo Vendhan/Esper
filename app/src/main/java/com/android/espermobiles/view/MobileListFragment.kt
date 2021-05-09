@@ -119,6 +119,7 @@ class MobileListFragment : Fragment() {
         })
     }
 
+    //function to get summary details to show in the next screen
     private fun generateSummary(chipGroup: ChipGroup): List<FeaturesData> {
         val ids = chipGroup.checkedChipIds
         val featureDataSummaryList = ArrayList<FeaturesData>()
@@ -131,6 +132,7 @@ class MobileListFragment : Fragment() {
         return featureDataSummaryList
     }
 
+    //function to create dynamic chips and set to correponding chipgroup declared in the UI
     private fun setCategoryChips(
         categories: List<FeaturesData>,
         enabled: Boolean = true,
@@ -183,6 +185,7 @@ class MobileListFragment : Fragment() {
         }
     }
 
+    //extension function to set disabled status for the chips already present in-case combination is not valid
     private fun ChipGroup.setChildrenEnabled(id: Int, checked: Boolean) {
         children.forEach {
             if (it.id == id) {
@@ -193,6 +196,7 @@ class MobileListFragment : Fragment() {
         }
     }
 
+    //function to get exclusions according to user inputs, checked value will change if chips is selected/deselected
     private fun getExclusions(featureID: String, buttonView: CompoundButton?, checked: Boolean) {
         if (checked)
             mainViewModel.getExclusions(
