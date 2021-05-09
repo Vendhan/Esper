@@ -1,14 +1,16 @@
 # Esper
-Esper is an app fecthes mobiles and its related deatils from api and shows it to user to make valid combinations according to exclusions given
+Esper is an app that fetches mobiles and its related details from api and shows it to user to make valid combinations according to exclusions given
 
-Major Libraries/ Components Involved:
+**Major Libraries/ Components Involved:
+**
 
 1. It uses retrofit and okhttp for network connection to fetch data from api
 2. it uses Room DB to store data to support offline
 3. App follows MVVM architecture
 4. It uses Koin for dependency injection
 
-App's functionality:
+**App's functionality:
+**
 
 1. When user opens app it will try to make network call to fetch data from api and it will store the same in DB in desired manner
 2. As soon as api fetch and DB insertion successful, app will fetch data from DB to show in UI
