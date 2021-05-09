@@ -1,8 +1,10 @@
 <resources>
     <string name="app_name">Esper Mobiles</string>
-    <string name="mobile_list">Mobile Phones</string>
+    <string name="mobile_list">Select Options</string>
     <string name="selection">Selection</string>
     <string name="summary">Summary</string>
     <string name="BASE_URL">https://my-json-server.typicode.com</string>
-    <string name="no_network_connectivity">No Internet</string>
+    <string name="no_network_connectivity">No Internet Connection!!</string>
+    <string name="submit">Submit</string>
+    <string name="warning_to_make_selection">Make atleast one selection in each section</string>
 </resources>

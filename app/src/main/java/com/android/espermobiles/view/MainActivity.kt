@@ -1,11 +1,13 @@
 package com.android.espermobiles.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.android.espermobiles.R
+import com.android.espermobiles.core.MainApplication
 import com.android.espermobiles.viewmodel.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -22,10 +24,14 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_mobile_list,
-            R.id.navigation_selection,
             R.id.navigation_summary
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
-        mainViewModel.fetchDataFromAPI()
+        if(MainApplication.isOnline(this))
+            mainViewModel.fetchDataFromAPI()
+        else {
+            mainViewModel.fetchFeaturesDataFromDB()
+            Toast.makeText(this, R.string.no_network_connectivity, Toast.LENGTH_LONG).show()
+        }
     }
 }

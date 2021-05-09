@@ -3,6 +3,8 @@ package com.android.espermobiles.db.converter
 import com.android.espermobiles.api.ResponseApiModel
 import com.android.espermobiles.db.model.ExclusionsData
 import com.android.espermobiles.db.model.FeaturesData
+import java.util.*
+import kotlin.collections.ArrayList
 
 class DataConverterImpl : DataConverter {
 
@@ -11,12 +13,13 @@ class DataConverterImpl : DataConverter {
         api.features?.forEach { featureApi ->
             featureApi.options?.forEach { optionsApi ->
                 val featureData = FeaturesData(
-                        id = 0,
-                        featureID = featureApi.featureID ?: "",
-                        featureName = featureApi.featureName ?: "",
-                        optionID = optionsApi.optionsID ?: "",
-                        optionIcon = optionsApi.optionsIcon ?: "",
-                        optionName = optionsApi.optionsName ?: ""
+                    id = UUID.randomUUID().toString(),
+                    featureID = featureApi.featureID ?: "",
+                    featureName = featureApi.featureName ?: "",
+                    optionID = optionsApi.optionsID ?: "",
+                    optionIcon = optionsApi.optionsIcon ?: "",
+                    optionName = optionsApi.optionsName ?: "",
+                    enabled = true
                 )
                 featuresDataList.add(featureData)
             }
@@ -28,7 +31,7 @@ class DataConverterImpl : DataConverter {
         val exclusionsList = ArrayList<ExclusionsData>()
         api.exclusions?.forEach {
             val exclusionData = ExclusionsData(
-                    id = null,
+                    id = UUID.randomUUID().toString(),
                     featureID1 = it[0].featureID ?: "",
                     featureID2 = it[1].featureID ?: "",
                     optionID1 = it[0].optionID ?: "",

@@ -3,26 +3,31 @@ package com.android.espermobiles.db
 import androidx.room.*
 import com.android.espermobiles.db.model.ExclusionsData
 import com.android.espermobiles.db.model.FeaturesData
-import io.reactivex.Completable
+import io.reactivex.Flowable
 
 @Dao
 interface MobileDao {
 
     @Query("SELECT * FROM Features")
-    fun findAll(): List<FeaturesData>
+    fun findAll(): Flowable<List<FeaturesData>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addFeatures(users: List<FeaturesData>) : Completable
+    @JvmSuppressWildcards
+    fun addFeatures(features: List<FeaturesData>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addExclusions(users: List<ExclusionsData>) : Completable
+    @JvmSuppressWildcards
+    fun addExclusions(exclusions: List<ExclusionsData>)
 
     @Query("DELETE FROM Features")
-    fun deleteFeatures() : Completable
+    fun deleteFeatures()
 
     @Query("DELETE FROM Exclusions")
-    fun deleteExclusions() : Completable
+    fun deleteExclusions()
 
-    /*@Query("SELECT * FROM Exclusions")
-    fun getExclusions(featureID: String, optionsID: String) : List<ExclusionsData>*/
+    @Query("SELECT * FROM Exclusions WHERE featureID1 == :featureID AND optionID1 == :optionsID")
+    fun getExclusion1(featureID: String, optionsID: String) : List<ExclusionsData>
+
+    @Query("SELECT * FROM Exclusions WHERE featureID2 == :featureID AND optionID12 == :optionsID")
+    fun getExclusion2(featureID: String, optionsID: String) : List<ExclusionsData>
 }

@@ -11,7 +11,8 @@ val databaseModule = module {
 
     fun provideDatabase(application: Application): MobileDatabase {
         return Room.databaseBuilder(application, MobileDatabase::class.java, "mobiles")
-                .fallbackToDestructiveMigration()
+            .allowMainThreadQueries()
+            .fallbackToDestructiveMigration()
                 .build()
     }
 

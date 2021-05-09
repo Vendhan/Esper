@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Features")
 data class FeaturesData(
-    @PrimaryKey(autoGenerate = true) val id: Int,
+    @PrimaryKey
+    val id: String,
     @ColumnInfo(name = "featureID")
     val featureID : String,
     @ColumnInfo(name = "featureName")
@@ -16,5 +17,7 @@ data class FeaturesData(
     @ColumnInfo(name = "optionName")
     val optionName : String,
     @ColumnInfo(name = "optionIcon")
-    val optionIcon : String
+    val optionIcon : String,
+    @ColumnInfo(name = "enabled")
+    val enabled : Boolean
 )

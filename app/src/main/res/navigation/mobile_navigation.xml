@@ -11,21 +11,8 @@
         android:label="@string/mobile_list"
         tools:layout="@layout/fragment_mobile_list" >
         <action
-            android:id="@+id/action_navigation_mobile_list_to_navigation_selection"
-            app:destination="@id/navigation_selection" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_selection"
-        android:name="com.android.espermobiles.view.SelectionFragment"
-        android:label="@string/selection"
-        tools:layout="@layout/fragment_selection" >
-        <action
-            android:id="@+id/action_navigation_selection_to_navigation_summary"
-            app:destination="@id/navigation_summary"
-            app:popUpTo="@id/navigation_selection"
-            app:popUpToInclusive="true"
-            />
+            android:id="@+id/action_navigation_mobile_list_to_navigation_summary"
+            app:destination="@id/navigation_summary" />
     </fragment>
 
     <fragment

@@ -6,7 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "Exclusions")
 data class ExclusionsData(
-        @PrimaryKey(autoGenerate = true) val id: Int?,
+        @PrimaryKey
+        val id: String,
         @ColumnInfo(name = "featureID1")
         val featureID1: String,
         @ColumnInfo(name = "optionID1")

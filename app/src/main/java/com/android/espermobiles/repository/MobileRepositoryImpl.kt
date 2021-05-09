@@ -5,6 +5,7 @@ import android.util.Log
 import com.android.espermobiles.api.MobileApi
 import com.android.espermobiles.db.MobileDao
 import com.android.espermobiles.db.converter.DataConverter
+import com.android.espermobiles.db.model.ExclusionsData
 import com.android.espermobiles.db.model.FeaturesData
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -27,6 +28,8 @@ class MobileRepositoryImpl(
                         response.body()?.let { responseApi ->
                             val featuresDataList = dataConverter.apiToFeatures(responseApi)
                             val exclusionsDataList = dataConverter.apiToExclusions(responseApi)
+                            Log.d("TAG features size", featuresDataList.toString())
+                            Log.d("TAG ex size", exclusionsDataList.toString())
                             mobileDao.deleteFeatures()
                             mobileDao.deleteExclusions()
                             mobileDao.addFeatures(featuresDataList)
@@ -38,7 +41,13 @@ class MobileRepositoryImpl(
     }
 
     override fun getFeaturesData(): Flowable<List<FeaturesData>> {
-        TODO("Not yet implemented")
+        return mobileDao.findAll()
+    }
+
+    override fun getExclusions(featureID: String, optionsID: String): List<ExclusionsData> {
+        val list1 = mobileDao.getExclusion1(featureID, optionsID)
+        val list2 = mobileDao.getExclusion2(featureID, optionsID)
+        return list1.plus(list2)
     }
 
 }
