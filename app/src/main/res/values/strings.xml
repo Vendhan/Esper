@@ -3,5 +3,6 @@
     <string name="mobile_list">Mobile Phones</string>
     <string name="selection">Selection</string>
     <string name="summary">Summary</string>
-    <string name="BASE_URL">empty</string>
+    <string name="BASE_URL">https://my-json-server.typicode.com</string>
+    <string name="no_network_connectivity">No Internet</string>
 </resources>
