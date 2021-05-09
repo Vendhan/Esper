@@ -11,7 +11,6 @@ import com.android.espermobiles.core.MainApplication
 import com.android.espermobiles.viewmodel.MainViewModel
 import org.koin.android.viewmodel.ext.android.viewModel
 
-
 class MainActivity : AppCompatActivity() {
 
     private val mainViewModel : MainViewModel by viewModel()
@@ -20,13 +19,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val navController = findNavController(R.id.nav_host_fragment)
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(setOf(
             R.id.navigation_mobile_list,
             R.id.navigation_summary
         ))
         setupActionBarWithNavController(navController, appBarConfiguration)
+        //checks for internet connectivity before initiating n/w call
         if(MainApplication.isOnline(this))
             mainViewModel.fetchDataFromAPI()
         else {

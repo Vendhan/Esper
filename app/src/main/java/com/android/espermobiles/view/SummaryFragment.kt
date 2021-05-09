@@ -9,7 +9,6 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.android.espermobiles.R
-import com.android.espermobiles.databinding.FragmentMobileListBinding
 import com.android.espermobiles.databinding.FragmentSummaryBinding
 import com.android.espermobiles.db.model.FeaturesData
 import com.android.espermobiles.viewmodel.MainViewModel
@@ -24,7 +23,11 @@ class SummaryFragment : Fragment() {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
         val dataBinding = DataBindingUtil.inflate<FragmentSummaryBinding>(
             inflater,
@@ -43,9 +46,7 @@ class SummaryFragment : Fragment() {
         val image = view.findViewById<AppCompatImageView>(R.id.mobile_image)
         Glide.with(this).load(feature1?.optionIcon).into(image)
         mainViewModel.mobileName.set(feature1?.optionName)
-
         mainViewModel.storageName.set(mainViewModel.feature2Summary.get()?.optionName)
-
         setCategoryChips(mainViewModel.feature3Summary.get()!!)
     }
 
@@ -65,6 +66,7 @@ class SummaryFragment : Fragment() {
                     override fun onLoadFailed(errorDrawable: Drawable?) {
                         mChip.chipIcon = errorDrawable
                     }
+
                     override fun onResourceReady(
                         resource: Drawable,
                         transition: Transition<in Drawable>?

@@ -8,10 +8,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.android.espermobiles.db.model.FeaturesData
 import com.android.espermobiles.repository.MobileRepository
+import com.android.espermobiles.utils.addToComposite
+import io.reactivex.disposables.CompositeDisposable
 
 class MainViewModel(
     private val repository: MobileRepository
-): ViewModel() {
+) : ViewModel() {
 
     val featureName1 = ObservableField<String>("")
     val featureName2 = ObservableField<String>("")
@@ -28,44 +30,43 @@ class MainViewModel(
 
     val storageName = ObservableField<String>()
     val mobileName = ObservableField<String>()
-
-//    init {
-//        fetchFeaturesDataFromDB()
-//    }
+    private val disposables = CompositeDisposable()
 
     fun fetchDataFromAPI() {
         showLoading.set(true)
         repository.fetchDataFromAPI()
-                .subscribe({
-                    showLoading.set(false)
-                    Log.d("TAG", "Success")
+            .subscribe({
+                showLoading.set(false)
+                Log.d("MainViewModel", "fetchDataFromAPI(): Success")
+                fetchFeaturesDataFromDB()
+            },
+                {
                     fetchFeaturesDataFromDB()
-                },
-                        {
-                            fetchFeaturesDataFromDB()
-                        })
+                })
+            .addToComposite(disposables)
     }
 
     fun fetchFeaturesDataFromDB() {
         showLoading.set(true)
         repository.getFeaturesData()
-            .subscribe ({
+            .subscribe({
                 showLoading.set(false)
                 featuresLiveData.postValue(it)
             },
                 {
-                    Log.d("fetchFeaturesDataFromDB", it.toString())
+                    Log.d("MainViewModel", it.toString())
                 }
             )
+            .addToComposite(disposables)
     }
 
     fun getExclusions(featureID: String, optionsID: String, checked: Boolean) {
         val result = repository.getExclusions(featureID, optionsID)
         val list = ArrayList<String>()
         result.forEach {
-            if(it.optionID1 == optionsID)
+            if (it.optionID1 == optionsID)
                 list.add(it.optionID2)
-            if(it.optionID2 == optionsID)
+            if (it.optionID2 == optionsID)
                 list.add(it.optionID1)
         }
         exclusionsLiveData.postValue(Pair(checked, list))

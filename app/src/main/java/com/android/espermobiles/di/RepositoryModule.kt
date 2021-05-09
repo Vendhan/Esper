@@ -10,10 +10,11 @@ import com.android.espermobiles.repository.MobileRepositoryImpl
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
 
+//di for repository impl files
 val repositoryModule = module {
 
     fun provideMobileRepository(api: MobileApi, dataConverter: DataConverter, mobileDao: MobileDao, context: Context): MobileRepository {
-        return MobileRepositoryImpl(context, api, dataConverter, mobileDao)
+        return MobileRepositoryImpl(api, dataConverter, mobileDao)
     }
     single { provideMobileRepository(get(), get(), get(), androidContext()) }
 

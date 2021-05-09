@@ -3,12 +3,10 @@ package com.android.espermobiles.api
 import io.reactivex.Observable
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Url
 
+//retrofit to make network connections
 interface MobileApi {
 
-    @GET
-    fun getAllDetails(
-        @Url url : String
-    ): Observable<Response<ResponseApiModel>>
+    @GET("/mhrpatel12/esper-assignment/db")
+    fun getAllDetails(): Observable<Response<ResponseApiModel>>
 }

@@ -7,6 +7,7 @@ import com.android.espermobiles.db.MobileDatabase
 import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module
 
+//provides database client through injection
 val databaseModule = module {
 
     fun provideDatabase(application: Application): MobileDatabase {

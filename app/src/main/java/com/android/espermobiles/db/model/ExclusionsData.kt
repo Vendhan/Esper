@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//Exclusion table to be stored in DB
 @Entity(tableName = "Exclusions")
 data class ExclusionsData(
         @PrimaryKey

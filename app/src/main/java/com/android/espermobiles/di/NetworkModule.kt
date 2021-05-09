@@ -10,6 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+//network module with client configuration
 val networkModule = module {
     val connectTimeout : Long = 20 // 20s
     val readTimeout : Long  = 20 // 20s

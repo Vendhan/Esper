@@ -1,7 +1,5 @@
 package com.android.espermobiles.repository
 
-import android.content.Context
-import android.util.Log
 import com.android.espermobiles.api.MobileApi
 import com.android.espermobiles.db.MobileDao
 import com.android.espermobiles.db.converter.DataConverter
@@ -12,42 +10,43 @@ import io.reactivex.Flowable
 import io.reactivex.schedulers.Schedulers
 
 class MobileRepositoryImpl(
-        private val context: Context,
-        private val mobileService: MobileApi,
-        private val dataConverter: DataConverter,
-        private val mobileDao: MobileDao
+    private val mobileService: MobileApi,
+    private val dataConverter: DataConverter,
+    private val mobileDao: MobileDao
 ) : MobileRepository {
 
+   /* fetches data from api and adding it to DB
+    before adding data to Db, it will remove the old data from DB if any*/
     override fun fetchDataFromAPI(): Completable {
-        Log.d("TAG", "fetchDataFromAPI()")
-        return mobileService.getAllDetails("https://my-json-server.typicode.com/mhrpatel12/esper-assignment/db")
-                .subscribeOn(Schedulers.io())
-                .firstOrError()
-                .flatMapCompletable { response ->
-                    if (response.isSuccessful) {
-                        response.body()?.let { responseApi ->
-                            val featuresDataList = dataConverter.apiToFeatures(responseApi)
-                            val exclusionsDataList = dataConverter.apiToExclusions(responseApi)
-                            Log.d("TAG features size", featuresDataList.toString())
-                            Log.d("TAG ex size", exclusionsDataList.toString())
-                            mobileDao.deleteFeatures()
-                            mobileDao.deleteExclusions()
-                            mobileDao.addFeatures(featuresDataList)
-                            mobileDao.addExclusions(exclusionsDataList)
-                        }
+        return mobileService.getAllDetails()
+            .subscribeOn(Schedulers.io())
+            .firstOrError()
+            .flatMapCompletable { response ->
+                if (response.isSuccessful) {
+                    response.body()?.let { responseApi ->
+                        val featuresDataList = dataConverter.apiToFeatures(responseApi)
+                        val exclusionsDataList = dataConverter.apiToExclusions(responseApi)
+                        mobileDao.deleteFeatures()
+                        mobileDao.deleteExclusions()
+                        mobileDao.addFeatures(featuresDataList)
+                        mobileDao.addExclusions(exclusionsDataList)
                     }
-                    Completable.complete()
                 }
+                Completable.complete()
+            }
     }
 
+    //fetches feature data from DB
     override fun getFeaturesData(): Flowable<List<FeaturesData>> {
         return mobileDao.findAll()
     }
 
+   /* fecthes exclusions data from DB
+    list1 will have data if input matches with feature1 and option1
+    list2 will have data if input matches with feature2 and option2*/
     override fun getExclusions(featureID: String, optionsID: String): List<ExclusionsData> {
         val list1 = mobileDao.getExclusion1(featureID, optionsID)
         val list2 = mobileDao.getExclusion2(featureID, optionsID)
         return list1.plus(list2)
     }
-
 }

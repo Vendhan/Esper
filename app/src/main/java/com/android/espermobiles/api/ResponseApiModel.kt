@@ -3,11 +3,13 @@ package com.android.espermobiles.api
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
+//api model file to parse json to kotlin/java objects
 class ResponseApiModel {
 
     @SerializedName("features")
     @Expose
     var features: List<FeaturesApi>? = null
+
     @SerializedName("exclusions")
     @Expose
     var exclusions: List<List<ExclusionsApi>>? = null
@@ -22,6 +24,7 @@ class ExclusionsApi {
     @SerializedName("feature_id")
     @Expose
     var featureID: String? = null
+
     @SerializedName("options_id")
     @Expose
     var optionID: String? = null
@@ -36,9 +39,11 @@ class FeaturesApi {
     @SerializedName("feature_id")
     @Expose
     var featureID: String? = null
+
     @SerializedName("name")
     @Expose
     var featureName: String? = null
+
     @SerializedName("options")
     @Expose
     var options: List<OptionsApi>? = null
@@ -53,9 +58,11 @@ class OptionsApi {
     @SerializedName("name")
     @Expose
     var optionsName: String? = null
+
     @SerializedName("icon")
     @Expose
     var optionsIcon: String? = null
+
     @SerializedName("id")
     @Expose
     var optionsID: String? = null

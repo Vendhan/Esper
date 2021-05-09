@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+//Features table to be stored in DB
 @Entity(tableName = "Features")
 data class FeaturesData(
     @PrimaryKey
@@ -18,6 +19,4 @@ data class FeaturesData(
     val optionName : String,
     @ColumnInfo(name = "optionIcon")
     val optionIcon : String,
-    @ColumnInfo(name = "enabled")
-    val enabled : Boolean
 )

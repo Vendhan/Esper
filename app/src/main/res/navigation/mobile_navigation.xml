@@ -12,7 +12,9 @@
         tools:layout="@layout/fragment_mobile_list" >
         <action
             android:id="@+id/action_navigation_mobile_list_to_navigation_summary"
-            app:destination="@id/navigation_summary" />
+            app:destination="@id/navigation_summary"
+            app:popUpTo="@id/navigation_mobile_list"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
@@ -20,8 +22,5 @@
         android:name="com.android.espermobiles.view.SummaryFragment"
         android:label="@string/summary"
         tools:layout="@layout/fragment_summary" >
-        <action
-            android:id="@+id/action_navigation_summary_to_navigation_mobile_list"
-            app:destination="@id/navigation_mobile_list" />
     </fragment>
 </navigation>

@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import com.android.espermobiles.db.model.ExclusionsData
 import com.android.espermobiles.db.model.FeaturesData
 
+//RoomDB
 @Database(
     entities = [FeaturesData::class, ExclusionsData::class],
     version = 1, exportSchema = false

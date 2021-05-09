@@ -6,7 +6,7 @@ import com.android.espermobiles.db.model.FeaturesData
 
 interface DataConverter {
 
-    fun apiToFeatures(api: ResponseApiModel) : List<FeaturesData>
+    fun apiToFeatures(api: ResponseApiModel): List<FeaturesData>
 
-    fun apiToExclusions(api: ResponseApiModel) : List<ExclusionsData>
+    fun apiToExclusions(api: ResponseApiModel): List<ExclusionsData>
 }
