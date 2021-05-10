@@ -69,6 +69,7 @@ class MainViewModel(
             if (it.optionID2 == optionsID)
                 list.add(it.optionID1)
         }
+        Log.d("EXCLUSIONS TAG", list.toString())
         exclusionsLiveData.postValue(Pair(checked, list))
     }
 

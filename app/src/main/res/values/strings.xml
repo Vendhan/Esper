@@ -6,7 +6,7 @@
     <string name="BASE_URL">https://my-json-server.typicode.com</string>
     <string name="no_network_connectivity">No Internet Connection!!</string>
     <string name="submit">Submit</string>
-    <string name="warning_to_make_selection">Make atleast one selection in each section</string>
+    <string name="warning_to_make_selection">Make atleast one selection in each section or Selected combination is not valid</string>
     <string name="something_went_wrong">Something went wrong, please try again later</string>
     <string name="storage_variants">Storage variants</string>
     <string name="features">Features</string>

@@ -2,6 +2,7 @@ package com.android.espermobiles.view
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -138,17 +139,8 @@ class MobileListFragment : Fragment() {
         enabled: Boolean = true,
         checked: Boolean = false
     ) {
-        var chipGroup = view?.findViewById<ChipGroup>(R.id.chipGroupMobiles)
-        when {
-            categories[0].featureID.toInt() == 1 -> chipGroup =
-                view?.findViewById(R.id.chipGroupMobiles)
-            categories[0].featureID.toInt() == 2 -> chipGroup =
-                view?.findViewById(R.id.chipGroupStorage)
-            categories[0].featureID.toInt() == 3 -> chipGroup =
-                view?.findViewById(R.id.chipGroupFeatures)
-        }
-
         for (category in categories) {
+            val chipGroup = getChipGroup(category)
             val mChip =
                 this.layoutInflater.inflate(R.layout.item_chip_category, null, false) as Chip
             mChip.text = category.optionName
@@ -179,9 +171,26 @@ class MobileListFragment : Fragment() {
                     })
                 chipGroup?.addView(mChip)
             } else {
-                chipGroup?.setChildrenEnabled(category.optionID.toInt(), checked)
+                val chipGroupToDisable = getChipGroup(category)
+                chipGroupToDisable?.setChildrenEnabled(category.optionID.toInt(), checked)
             }
+        }
+    }
 
+    private fun getChipGroup(category: FeaturesData) : ChipGroup? {
+        return when {
+            category.featureID.toInt() == 1 -> {
+                view?.findViewById(R.id.chipGroupMobiles)
+            }
+            category.featureID.toInt() == 2 -> {
+                view?.findViewById(R.id.chipGroupStorage)
+            }
+            category.featureID.toInt() == 3 -> {
+                view?.findViewById(R.id.chipGroupFeatures)
+            }
+            else -> {
+                view?.findViewById(R.id.chipGroupMobiles)
+            }
         }
     }
 
@@ -189,9 +198,10 @@ class MobileListFragment : Fragment() {
     private fun ChipGroup.setChildrenEnabled(id: Int, checked: Boolean) {
         children.forEach {
             if (it.id == id) {
+                it.isEnabled = !checked
                 if (it.isSelected)
                     it.isSelected = false
-                it.isEnabled = !checked
+
             }
         }
     }
