@@ -31,10 +31,7 @@ interface MobileDao {
     fun deleteExclusions()
 
     //query to find the exclusion by matching the user input
-    @Query("SELECT * FROM Exclusions WHERE featureID1 == :featureID AND optionID1 == :optionsID")
-    fun getExclusion1(featureID: String, optionsID: String): List<ExclusionsData>
+    @Query("SELECT * FROM Exclusions WHERE (featureID1 == :featureID OR featureID2 == :featureID) AND (optionID1 == :optionsID OR optionID12 == :optionsID)")
+    fun getExclusion(featureID: String, optionsID: String): List<ExclusionsData>
 
-    //query to find the exclusion by matching the user input
-    @Query("SELECT * FROM Exclusions WHERE featureID2 == :featureID AND optionID12 == :optionsID")
-    fun getExclusion2(featureID: String, optionsID: String): List<ExclusionsData>
 }

@@ -1,5 +1,6 @@
 package com.android.espermobiles.repository
 
+import android.util.Log
 import com.android.espermobiles.api.MobileApi
 import com.android.espermobiles.db.MobileDao
 import com.android.espermobiles.db.converter.DataConverter
@@ -42,11 +43,9 @@ class MobileRepositoryImpl(
     }
 
    /* fecthes exclusions data from DB
-    list1 will have data if input matches with feature1 and option1
-    list2 will have data if input matches with feature2 and option2*/
+    returned list will have data if input matches with feature1 and option1
+    OR if input matches with feature2 and option2*/
     override fun getExclusions(featureID: String, optionsID: String): List<ExclusionsData> {
-        val list1 = mobileDao.getExclusion1(featureID, optionsID)
-        val list2 = mobileDao.getExclusion2(featureID, optionsID)
-        return list1.plus(list2)
+        return mobileDao.getExclusion(featureID, optionsID)
     }
 }
