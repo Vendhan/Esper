@@ -29,6 +29,7 @@ class MobileListFragment : Fragment() {
 
     private val mainViewModel by sharedViewModel<MainViewModel>()
     private var list: List<FeaturesData> = emptyList()
+    private var selectedIds = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,16 +82,31 @@ class MobileListFragment : Fragment() {
             }
         })
 
-        mainViewModel.exclusionsLiveData.observe(viewLifecycleOwner, Observer {
-            if (it.second.isNotEmpty()) {
+        mainViewModel.exclusionsLiveDataForCheckedItems.observe(viewLifecycleOwner, Observer {
+            Log.d("EXCLUSIONS LIVEDATA check", it.toString())
+            if (it.isNotEmpty()) {
                 val l = ArrayList<FeaturesData>()
-                it.second.forEach { optionId ->
+                it.forEach { optionId ->
                     list.forEach { featureData ->
                         if (featureData.optionID == optionId)
                             l.add(featureData)
                     }
                 }
-                setCategoryChips(l, false, it.first)
+                    disableExclusionsForCheckedItem(l)
+            }
+        })
+
+        mainViewModel.exclusionsLiveDataForUnCheckedItems.observe(viewLifecycleOwner, Observer {
+            Log.d("EXCLUSIONS LIVEDATA uncheck", it.toString())
+            if (it.isNotEmpty()) {
+                val l = ArrayList<FeaturesData>()
+                it.forEach { optionId ->
+                    list.forEach { featureData ->
+                        if (featureData.optionID == optionId)
+                            l.add(featureData)
+                    }
+                }
+                enableExclusionsForUnCheckedItem(l)
             }
         })
 
@@ -122,11 +138,13 @@ class MobileListFragment : Fragment() {
 
     //function to get summary details to show in the next screen
     private fun generateSummary(chipGroup: ChipGroup): List<FeaturesData> {
-        val ids = chipGroup.checkedChipIds
+        val ids = chipGroup.children.filter { it as Chip
+            it.isChecked && it.isCheckable
+        }
         val featureDataSummaryList = ArrayList<FeaturesData>()
         list.forEach { featureData ->
             ids.forEach {
-                if (featureData.optionID.toInt() == it)
+                if (featureData.optionID.toInt() == it.id)
                     featureDataSummaryList.add(featureData)
             }
         }
@@ -147,7 +165,11 @@ class MobileListFragment : Fragment() {
             mChip.id = category.optionID.toInt()
             mChip.height = 100
             mChip.setOnCheckedChangeListener { buttonView, isChecked ->
-                getExclusions(category.featureID, buttonView, isChecked)
+                Log.d("TAG button isChecked ${buttonView.id}", "${isChecked.toString()} -- featureID- ${category.featureID}")
+                if(isChecked)
+                    getExclusions(category.featureID, buttonView, checked = true)
+                else
+                    getExclusions(category.featureID, buttonView, checked= false)
             }
             if (enabled) {
                 Glide.with(this)
@@ -171,9 +193,26 @@ class MobileListFragment : Fragment() {
                     })
                 chipGroup?.addView(mChip)
             } else {
+                Log.d("EXCLUSIONS TAB category", category.toString())
                 val chipGroupToDisable = getChipGroup(category)
                 chipGroupToDisable?.setChildrenEnabled(category.optionID.toInt(), checked)
             }
+        }
+    }
+
+    private fun disableExclusionsForCheckedItem(features: List<FeaturesData>) {
+
+        features.forEach {  featureData ->
+            val chipGroupToDisable = getChipGroup(featureData)
+            chipGroupToDisable?.setChildrenEnabled(featureData.optionID.toInt(), false)
+        }
+    }
+
+    private fun enableExclusionsForUnCheckedItem(features: List<FeaturesData>) {
+
+        features.forEach {  featureData ->
+            val chipGroupToDisable = getChipGroup(featureData)
+            chipGroupToDisable?.setChildrenEnabled(featureData.optionID.toInt(), true)
         }
     }
 
@@ -195,13 +234,14 @@ class MobileListFragment : Fragment() {
     }
 
     //extension function to set disabled status for the chips already present in-case combination is not valid
-    private fun ChipGroup.setChildrenEnabled(id: Int, checked: Boolean) {
-        children.forEach {
+    private fun ChipGroup.setChildrenEnabled(id: Int, enable : Boolean) {
+        children.forEach { it as Chip
             if (it.id == id) {
-                it.isEnabled = !checked
-                if (it.isSelected)
-                    it.isSelected = false
-
+                if (it.isChecked) {
+                    it.isChecked = false
+                    it.isCheckable = false
+                }
+                it.isEnabled = enable
             }
         }
     }

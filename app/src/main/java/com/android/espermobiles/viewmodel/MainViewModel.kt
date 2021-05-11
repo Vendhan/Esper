@@ -21,7 +21,8 @@ class MainViewModel(
     val showLoading = ObservableBoolean()
 
     val featuresLiveData = MutableLiveData<List<FeaturesData>>()
-    val exclusionsLiveData = MutableLiveData<Pair<Boolean, List<String>>>()
+    val exclusionsLiveDataForCheckedItems = MutableLiveData< List<String>>()
+    val exclusionsLiveDataForUnCheckedItems = MutableLiveData<List<String>>()
     val submitClicked = MutableLiveData<Boolean>()
 
     val feature1Summary = ObservableField<FeaturesData>()
@@ -69,8 +70,10 @@ class MainViewModel(
             if (it.optionID2 == optionsID)
                 list.add(it.optionID1)
         }
-        Log.d("EXCLUSIONS TAG", list.toString())
-        exclusionsLiveData.postValue(Pair(checked, list))
+        if(checked)
+            exclusionsLiveDataForCheckedItems.postValue(list)
+        else
+            exclusionsLiveDataForUnCheckedItems.postValue(list)
     }
 
     fun onClickSubmit(view: View) {
