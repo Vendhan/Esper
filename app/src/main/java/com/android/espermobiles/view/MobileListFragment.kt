@@ -83,7 +83,7 @@ class MobileListFragment : Fragment() {
         })
 
         mainViewModel.exclusionsLiveDataForCheckedItems.observe(viewLifecycleOwner, Observer {
-            Log.d("EXCLUSIONS LIVEDATA check", it.toString())
+            Log.d("EXCLUSIONS LDATA check", it.toString())
             if (it.isNotEmpty()) {
                 val l = ArrayList<FeaturesData>()
                 it.forEach { optionId ->
@@ -97,7 +97,7 @@ class MobileListFragment : Fragment() {
         })
 
         mainViewModel.exclusionsLiveDataForUnCheckedItems.observe(viewLifecycleOwner, Observer {
-            Log.d("EXCLUSIONS LIVEDATA uncheck", it.toString())
+            Log.d("EXCLUSIONS LDATA uncheck", it.toString())
             if (it.isNotEmpty()) {
                 val l = ArrayList<FeaturesData>()
                 it.forEach { optionId ->
